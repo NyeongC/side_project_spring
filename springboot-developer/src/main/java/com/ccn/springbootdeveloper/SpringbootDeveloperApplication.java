@@ -1,4 +1,4 @@
-package com.ccn.springboot_developer;
+package com.ccn.springbootdeveloper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
