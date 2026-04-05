@@ -2,9 +2,8 @@ name: Deploy Spring Boot
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:   # 👉 버튼 배포 추가🔥
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -52,10 +51,13 @@ jobs:
             echo "새 애플리케이션 실행"
             cd /home/ubuntu/app
 
-            nohup java -jar springboot-developer-0.0.1-SNAPSHOT.jar > app.log 2>&1 < /dev/null &
+            JAR=$(ls *.jar | head -n 1)
+            echo "실행할 jar: $JAR"
+
+            nohup java -jar $JAR > app.log 2>&1 < /dev/null &
 
             echo $! > app.pid
 
-            disown   
+            disown
 
             echo "배포 완료"
