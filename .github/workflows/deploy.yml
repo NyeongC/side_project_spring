@@ -43,11 +43,13 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "기존 프로세스 종료"
-            pkill -f 'java -jar' || true
-            sleep 2
+            if [ -f /home/ubuntu/app/app.pid ]; then
+              kill -15 $(cat /home/ubuntu/app/app.pid) || true
+              rm -f /home/ubuntu/app/app.pid
+            fi
 
             echo "새 애플리케이션 실행"
             nohup java -jar /home/ubuntu/app/*.jar > app.log 2>&1 &
+            echo $! > /home/ubuntu/app/app.pid
 
             echo "배포 완료"
-            exit 0   # 👉 무조건 성공 처리🔥
