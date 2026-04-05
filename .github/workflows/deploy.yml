@@ -34,7 +34,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "build/libs/*.jar"
           target: "/home/ubuntu/app"
-          strip_components: 2  
+          strip_components: 2
 
       - name: 서버 실행
         uses: appleboy/ssh-action@v0.1.6
@@ -50,7 +50,12 @@ jobs:
             fi
 
             echo "새 애플리케이션 실행"
-            nohup java -jar /home/ubuntu/app/*.jar > app.log 2>&1 &
-            echo $! > /home/ubuntu/app/app.pid
+            cd /home/ubuntu/app
+
+            nohup java -jar springboot-developer-0.0.1-SNAPSHOT.jar > app.log 2>&1 < /dev/null &
+
+            echo $! > app.pid
+
+            disown   
 
             echo "배포 완료"
