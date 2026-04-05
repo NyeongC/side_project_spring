@@ -34,6 +34,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "build/libs/*.jar"
           target: "/home/ubuntu/app"
+          strip_components: 2  
 
       - name: 서버 실행
         uses: appleboy/ssh-action@v0.1.6
