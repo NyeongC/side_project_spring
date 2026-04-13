@@ -12,6 +12,8 @@ spring:
     console:
       enabled: true
       path: /h2-console
+      settings:
+        web-allow-others: true # localhost 외 허용
 
     jpa:
       hibernate:
