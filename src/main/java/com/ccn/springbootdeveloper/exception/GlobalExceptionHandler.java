@@ -39,4 +39,18 @@ public class GlobalExceptionHandler {
                 .badRequest()
                 .body(new ApiResponse<>(400, message, null));
     }
+
+    @ExceptionHandler(TodoNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleTodoNotFound() {
+        return ResponseEntity
+                .status(404)
+                .body(new ApiResponse<>(404, "존재하지 않는 Todo 입니다.", null));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleUserNotFound() {
+        return ResponseEntity
+                .status(404)
+                .body(new ApiResponse<>(404, "존재하지 않는 User 입니다.", null));
+    }
 }
