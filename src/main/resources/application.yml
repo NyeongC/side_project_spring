@@ -15,13 +15,13 @@ spring:
       settings:
         web-allow-others: true # localhost 외 허용
 
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true   # 🔥 이거 추가
+    show-sql: true
+    properties:
       hibernate:
-        ddl-auto: create
-      defer-datasource-initialization: true   # 🔥 이거 추가
-      show-sql: true
-      properties:
-        hibernate:
-          format_sql: true
+        format_sql: true
 server:
   port: 8080

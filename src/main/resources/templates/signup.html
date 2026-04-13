@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원가입</title>
+</head>
+<body>
+
+<h2>회원가입</h2>
+
+<form id="signupForm">
+    <input type="text" name="username" placeholder="아이디"><br>
+    <input type="password" name="password" placeholder="비밀번호"><br>
+    <input type="text" name="email" placeholder="이메일"><br>
+    <input type="number" name="age" placeholder="나이"><br>
+    <button type="submit">가입</button>
+</form>
+
+<script>
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = {
+            username: e.target.username.value,
+            password: e.target.password.value,
+            email: e.target.email.value,
+            age: e.target.age.value
+        };
+
+        const res = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+        alert(result.message);
+
+        if (res.status === 201) {
+            location.href = "/login";
+        }
+    });
+</script>
+
+</body>
+</html>
