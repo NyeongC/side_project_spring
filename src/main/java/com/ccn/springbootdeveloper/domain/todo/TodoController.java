@@ -1,6 +1,7 @@
 package com.ccn.springbootdeveloper.domain.todo;
 
 import com.ccn.springbootdeveloper.domain.todo.dto.TodoRequest;
+import com.ccn.springbootdeveloper.domain.todo.dto.TodoResponse;
 import com.ccn.springbootdeveloper.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,7 +22,7 @@ public class TodoController {
     }
 
     @GetMapping("/{userId}")
-    public List<Todo> get(@PathVariable Long userId) {
+    public List<TodoResponse> get(@PathVariable Long userId) {
         return todoService.getTodos(userId);
     }
 

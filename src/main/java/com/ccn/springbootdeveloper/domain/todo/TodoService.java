@@ -1,6 +1,7 @@
 package com.ccn.springbootdeveloper.domain.todo;
 
 import com.ccn.springbootdeveloper.domain.todo.dto.TodoRequest;
+import com.ccn.springbootdeveloper.domain.todo.dto.TodoResponse;
 import com.ccn.springbootdeveloper.domain.user.User;
 import com.ccn.springbootdeveloper.domain.user.UserRepository;
 import com.ccn.springbootdeveloper.exception.TodoNotFoundException;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,18 +32,15 @@ public class TodoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Todo> getTodos(Long userId) {
+    public List<TodoResponse> getTodos(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow();
 
-        return todoRepository.findByUser(user);
+        return todoRepository.findByUser(user).stream()
+                .map(TodoResponse::new)
+                .collect(Collectors.toList());
     }
-
-    public void addTodo(User user, TodoRequest request) {
-        Todo todo = new Todo(request.getContent(), user);
-        todoRepository.save(todo);
-    }
-
+    
     public void deleteTodo(Long id) {
         todoRepository.deleteById(id);
     }
