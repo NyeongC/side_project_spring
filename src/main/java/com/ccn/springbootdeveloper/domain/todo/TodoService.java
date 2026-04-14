@@ -5,6 +5,7 @@ import com.ccn.springbootdeveloper.domain.user.User;
 import com.ccn.springbootdeveloper.domain.user.UserRepository;
 import com.ccn.springbootdeveloper.exception.TodoNotFoundException;
 import com.ccn.springbootdeveloper.exception.UserNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class TodoService {
 
     private final TodoRepository todoRepository;
@@ -27,6 +29,7 @@ public class TodoService {
         todoRepository.save(todo);
     }
 
+    @Transactional(readOnly = true)
     public List<Todo> getTodos(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow();
